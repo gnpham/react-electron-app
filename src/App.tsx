@@ -49,7 +49,7 @@ function App() {
 
   return (
     <div style={{ padding: "20px", fontFamily: "Arial, sans-serif" }}>
-      <h1>Electron + React + Vite + WebSocket</h1>
+      <h1>Electron + React + WebSocket</h1>
 
       <div style={{ marginBottom: "20px" }}>
         <h3>Connection Status:</h3>
