@@ -18,7 +18,7 @@ const createWindow = async () => {
   if (isDev) {
     // Development: load from Vite dev server
     await win.loadURL("http://localhost:5173");
-    win.webContents.openDevTools();
+    // win.webContents.openDevTools();
   } else {
     // Production: load from built static files
     await win.loadFile(path.resolve(__dirname, "../dist/index.html"));
