@@ -1,0 +1,60 @@
+body {
+  font-family: Arial, sans-serif;
+  background: #f9f9f9;
+}
+
+.app-container {
+  padding: 20px;
+}
+
+.header {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 24px;
+}
+
+.status-box {
+  display: inline-block;
+  padding: 8px 16px;
+  border-radius: 4px;
+  color: white;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+.status-connected {
+  background-color: #4caf50;
+}
+.status-disconnected {
+  background-color: #f44336;
+}
+
+.display-btn {
+  padding: 12px 24px;
+  font-size: 16px;
+  background-color: #2196f3;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-bottom: 20px;
+  transition: opacity 0.2s;
+}
+.display-btn:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.result-box {
+  margin-top: 20px;
+  padding: 16px;
+  background-color: #f5f5f5;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+}
+.result-pre {
+  background-color: white;
+  padding: 12px;
+  border-radius: 4px;
+  overflow: auto;
+}

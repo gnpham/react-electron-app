@@ -48,65 +48,24 @@ function App() {
   };
 
   return (
-    <div style={{ padding: "20px", fontFamily: "Arial, sans-serif" }}>
-      <h1>Electron + React + WebSocket</h1>
+    <div className="app-container">
+      <h1 className="header">Electron + React + WebSocket</h1>
 
       <div style={{ marginBottom: "20px" }}>
         <h3>Connection Status:</h3>
-        <div
-          style={{
-            display: "inline-block",
-            padding: "8px 16px",
-            borderRadius: "4px",
-            backgroundColor: isConnected ? "#4CAF50" : "#f44336",
-            color: "white",
-            fontWeight: "bold"
-          }}
-        >
-          {isConnected ? "Connected" : "Disconnected"}
-        </div>
+        <div className={`status-box ${isConnected ? "status-connected" : "status-disconnected"}`}>{isConnected ? "Connected" : "Disconnected"}</div>
       </div>
 
       <div style={{ marginBottom: "20px" }}>
-        <button
-          onClick={handleDeviceInfo}
-          disabled={!isConnected || isLoading}
-          style={{
-            padding: "12px 24px",
-            fontSize: "16px",
-            backgroundColor: isConnected ? "#2196F3" : "#ccc",
-            color: "white",
-            border: "none",
-            borderRadius: "4px",
-            cursor: isConnected && !isLoading ? "pointer" : "not-allowed",
-            opacity: isLoading ? 0.7 : 1
-          }}
-        >
+        <button onClick={handleDeviceInfo} disabled={!isConnected || isLoading} className="display-btn">
           {isLoading ? "Loading..." : "Display Device"}
         </button>
       </div>
 
       {deviceResult && (
-        <div
-          style={{
-            marginTop: "20px",
-            padding: "16px",
-            backgroundColor: "#f5f5f5",
-            borderRadius: "4px",
-            border: "1px solid #ddd"
-          }}
-        >
+        <div className="result-box">
           <h3>Device Result:</h3>
-          <pre
-            style={{
-              backgroundColor: "white",
-              padding: "12px",
-              borderRadius: "4px",
-              overflow: "auto"
-            }}
-          >
-            {JSON.stringify(deviceResult, null, 2)}
-          </pre>
+          <pre className="result-pre">{JSON.stringify(deviceResult, null, 2)}</pre>
         </div>
       )}
     </div>
