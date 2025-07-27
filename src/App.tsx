@@ -1,19 +1,19 @@
 import { useEffect, useState } from "react";
-import { socket, sendDisplayDevice } from "./socket";
+import { sendDisplayDevice, getConnectionStatus } from "./socket";
 
 function App() {
-  const [isConnected, setIsConnected] = useState(false);
+  const [isConnected, setIsConnected] = useState(getConnectionStatus());
   const [deviceResult, setDeviceResult] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    // Listen for connection status
-    const handleConnect = () => {
+    // Listen for connection status via custom events
+    const handleSocketConnected = () => {
       setIsConnected(true);
       console.log("Connected to server");
     };
 
-    const handleDisconnect = () => {
+    const handleSocketDisconnected = () => {
       setIsConnected(false);
       console.log("Disconnected from server");
     };
@@ -25,18 +25,15 @@ function App() {
       console.log("Received device result:", event.detail);
     };
 
-    // Add event listeners
-    socket.on("connect", handleConnect);
-    socket.on("disconnect", handleDisconnect);
+    // Add event listeners for custom events
+    window.addEventListener("socket-connected", handleSocketConnected);
+    window.addEventListener("socket-disconnected", handleSocketDisconnected);
     window.addEventListener("device-result", handleDeviceResult as EventListener);
-
-    // Set initial connection status
-    setIsConnected(socket.connected);
 
     // Cleanup
     return () => {
-      socket.off("connect", handleConnect);
-      socket.off("disconnect", handleDisconnect);
+      window.removeEventListener("socket-connected", handleSocketConnected);
+      window.removeEventListener("socket-disconnected", handleSocketDisconnected);
       window.removeEventListener("device-result", handleDeviceResult as EventListener);
     };
   }, []);

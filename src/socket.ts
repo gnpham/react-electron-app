@@ -12,14 +12,23 @@ export const socket = io("ws://localhost:4000/ws/iot", {
   reconnection: true
 });
 
+// Global connection status
+let isConnected = false;
+
 // Listen connect
 socket.on("connect", () => {
+  isConnected = true;
   console.log("Connected to server");
+  // Emit custom event can listen
+  window.dispatchEvent(new CustomEvent("socket-connected"));
 });
 
 // Listen disconnect
 socket.on("disconnect", () => {
+  isConnected = false;
   console.log("Disconnected from server");
+  // Emit custom event to listen
+  window.dispatchEvent(new CustomEvent("socket-disconnected"));
 });
 
 // Function to send display-device event
@@ -38,3 +47,5 @@ socket.on("display-device-result", (result) => {
   // You can emit a custom event here to notify React components
   window.dispatchEvent(new CustomEvent("device-result", { detail: result }));
 });
+
+export const getConnectionStatus = () => isConnected;
