@@ -77,13 +77,13 @@ npm run dev           # Start React (Vite dev server)
 npm run dev:electron  # Start Electron (the app window will load from localhost:5173)
 ```
 
-> **Note:**
+<!-- > **Note:**
 >
 > - You should open 2 terminals and run both commands in parallel.
 > - Or use an automatic script (if available):
 >   ```bash
 >   npm run dev:all
->   ```
+>   ``` -->
 
 ## Build and Run PRODUCT (production)
 
