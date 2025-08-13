@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import { sendReportProduction, getConnectionStatus } from "./web-socket";
+import { sendProcessData, getConnectionStatus } from "./web-socket";
 
 function WebApp() {
   const [isConnected, setIsConnected] = useState(getConnectionStatus());
-  const [reportResult, setReportResult] = useState(null);
+  const [processResult, setProcessResult] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -17,39 +17,44 @@ function WebApp() {
       console.log("Disconnected from server");
     };
 
-    const handleReportResult = (event: CustomEvent) => {
-      setReportResult(event.detail);
+    const handleProcessResult = (event: CustomEvent) => {
+      setProcessResult(event.detail);
       setIsLoading(false);
-      console.log("Received report-production result:", event.detail);
+      console.log("Received process-data result:", event.detail);
     };
 
     window.addEventListener("socket-connected", handleSocketConnected);
     window.addEventListener("socket-disconnected", handleSocketDisconnected);
-    window.addEventListener("report-result", handleReportResult as EventListener);
+    window.addEventListener("process-data-result", handleProcessResult as EventListener);
 
     return () => {
       window.removeEventListener("socket-connected", handleSocketConnected);
       window.removeEventListener("socket-disconnected", handleSocketDisconnected);
-      window.removeEventListener("report-result", handleReportResult as EventListener);
+      window.removeEventListener("process-data-result", handleProcessResult as EventListener);
     };
   }, []);
 
-  const handleReportProduction = () => {
+  const handleGetProcessData = () => {
     setIsLoading(true);
-    setReportResult(null);
+    setProcessResult(null);
 
-    // Call event report-production by WS
-    sendReportProduction({
-      page: 1,
-      pageSize: 10,
-      tenant_id: "e42b2852-99ec-40a1-bfdf-16d82c567236",
-      show_product: false
+    sendProcessData({
+      process_id: "b3c1e04b-018e-4f2f-b9ca-666e35a42985",
+      filterProcessDataDto: {
+        page: 1,
+        pageSize: 10,
+        tenant_id: "e42b2852-99ec-40a1-bfdf-16d82c567236",
+        search: "",
+        size_id: "",
+        product_id: "",
+        approval_required: null
+      }
     });
   };
 
   return (
     <div className="app-container">
-      <h1 className="header">React + WebSocket - Report Production</h1>
+      <h1 className="header">React + WebSocket - Process Data</h1>
 
       <div style={{ marginBottom: "20px" }}>
         <h3>Connection Status:</h3>
@@ -57,15 +62,15 @@ function WebApp() {
       </div>
 
       <div style={{ marginBottom: "20px" }}>
-        <button onClick={handleReportProduction} disabled={!isConnected || isLoading} className="display-btn">
-          {isLoading ? "Loading..." : "Report Production"}
+        <button onClick={handleGetProcessData} disabled={!isConnected || isLoading} className="display-btn">
+          {isLoading ? "Loading..." : "Get Process Data"}
         </button>
       </div>
 
-      {reportResult && (
+      {processResult && (
         <div className="result-box">
-          <h3>Report Result:</h3>
-          <pre className="result-pre">{JSON.stringify(reportResult, null, 2)}</pre>
+          <h3>Process Data Result:</h3>
+          <pre className="result-pre">{JSON.stringify(processResult, null, 2)}</pre>
         </div>
       )}
     </div>
