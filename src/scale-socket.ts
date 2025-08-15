@@ -9,6 +9,7 @@ export const worker_summary = true;
 // Create socket connection
 export const socket = io("ws://localhost:4000/ws/iot", {
   transports: ["websocket"],
+  query: { deviceId: "DEVICE_ID" },
   reconnection: true
 });
 
@@ -46,6 +47,11 @@ socket.on("display-device-result", (result) => {
   console.log("Display device result:", result);
   // You can emit a custom event here to notify React components
   window.dispatchEvent(new CustomEvent("device-result", { detail: result }));
+});
+
+// Listen for sync-request
+socket.on("sync-request", (result) => {
+  console.log("Sync request:", result);
 });
 
 export const getConnectionStatus = () => isConnected;
