@@ -5,8 +5,9 @@ const token =
 
 export const socket = io("ws://localhost:4000/ws/process", {
   transports: ["websocket"],
-  reconnection: true,
-  auth: { token }
+  query: { type: "web", deviceId: "" },
+  auth: { token },
+  reconnection: true
 });
 
 let isConnected = false;
