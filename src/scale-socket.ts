@@ -6,13 +6,11 @@ export const access_key = "cba417a8-da45-477b-8572-20507169fd82";
 export const model_type = "Display";
 export const worker_summary = true;
 
-const token = "";
-
 // Create socket connection
 export const socket = io("ws://localhost:4000/ws/iot", {
   transports: ["websocket"],
   query: { type: "device", deviceId: "DEVICE_ID" },
-  auth: { token },
+  auth: { token: "" },
   reconnection: true
 });
 
