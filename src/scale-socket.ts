@@ -10,7 +10,10 @@ const clientType = "device"; // device or web
 const deviceId = "D83ADDAA4863";
 const accessToken = "";
 
+// export const socket = io("wss://connect-dev.qcm.com.vn/ws/iot", {
+// export const socket = io("ws://168.231.119.101:4000/ws/iot", {
 export const socket = io("ws://localhost:4000/ws/iot", {
+  path: "/socket.io/",
   transports: ["websocket"],
   query: { type: clientType, deviceId },
   auth: { token: accessToken },
