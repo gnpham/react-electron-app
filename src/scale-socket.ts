@@ -6,11 +6,14 @@ export const access_key = "cba417a8-da45-477b-8572-20507169fd82";
 export const model_type = "Display";
 export const worker_summary = true;
 
-// Create socket connection
+const clientType = "device"; // device or web
+const deviceId = "D83ADDAA4863";
+const accessToken = "";
+
 export const socket = io("ws://localhost:4000/ws/iot", {
   transports: ["websocket"],
-  query: { type: "device", deviceId: "DEVICE_ID" },
-  auth: { token: "" },
+  query: { type: clientType, deviceId },
+  auth: { token: accessToken },
   reconnection: true
 });
 
@@ -53,6 +56,8 @@ socket.on("display-device-result", (result) => {
 // Listen for sync-request
 socket.on("sync-request", (result) => {
   console.log("Sync request:", result);
+  alert(result);
+  window.dispatchEvent(new CustomEvent("device-result", { detail: result }));
 });
 
 export const getConnectionStatus = () => isConnected;
