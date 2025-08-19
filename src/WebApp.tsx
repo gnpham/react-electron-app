@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useRef, useState } from "react";
 import { sendProcessData, getConnectionStatus } from "./web-socket";
 
@@ -95,10 +96,50 @@ function WebApp() {
       {isLoading && <div style={{ marginBottom: 12 }}>Loading...</div>}
 
       {processResult && (
-        <div className="result-box">
-          <h3>Process Data Result:</h3>
-          <pre className="result-pre">{JSON.stringify(processResult, null, 2)}</pre>
-        </div>
+        <>
+          <div className="table-container">
+            {((processResult as any)?.data?.data?.list ?? []).length === 0 ? (
+              <div className="result-box">Không có dữ liệu</div>
+            ) : (
+              <table className="data-table">
+                <thead>
+                  <tr>
+                    <th>Mã thẻ</th>
+                    <th>Nhân viên</th>
+                    <th>Sản phẩm</th>
+                    <th>Công đoạn</th>
+                    <th>Size</th>
+                    <th>Thiết bị</th>
+                    <th className="text-right">Khối lượng</th>
+                    <th>Thời gian</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {((processResult as any)?.data?.data?.list ?? []).map((item: any, index: number) => {
+                    return (
+                      <tr key={item.id ?? index}>
+                        <td className="nowrap">{item?.card_code}</td>
+                        <td className="nowrap">{item?.employee_name}</td>
+                        <td className="nowrap">{item?.product_name}</td>
+                        <td className="nowrap">{item?.stage_name}</td>
+                        <td className="nowrap">{item?.size_name}</td>
+                        <td className="nowrap">{item?.name_scales}</td>
+                        <td className="text-right">{item?.quantity}</td>
+                        <td className="nowrap">{item?.date_time}</td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            )}
+          </div>
+
+          {/* JSON đầy đủ để debug (tuỳ chọn) */}
+          <div className="result-box">
+            <h3>Process Data Result (raw):</h3>
+            <pre className="result-pre">{JSON.stringify(processResult, null, 2)}</pre>
+          </div>
+        </>
       )}
     </div>
   );
