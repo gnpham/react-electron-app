@@ -1,39 +1,99 @@
-# React + TypeScript + Vite
+# React Electron App với Multiple WebSocket Namespaces
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Ứng dụng này demo việc sử dụng nhiều kết nối WebSocket đến các namespace khác nhau trên cùng một server.
 
-Currently, two official plugins are available:
+## Cấu trúc WebSocket
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### Namespaces được hỗ trợ:
 
-## Expanding the ESLint configuration
+- `/ws/process` - Xử lý dữ liệu process
+- `/ws/report` - Xử lý báo cáo production
+- `/ws/dashboard` - Xử lý dashboard charts
+- `/ws/iot` - Xử lý IoT devices
 
-# How to Run and Build the App
+### Cách hoạt động:
 
-## Run in DEV mode
-
-```bash
-npm run dev           # Start React (Vite dev server)
-npm run dev:electron  # Start Electron (the app window will load from localhost:5173)
+```typescript
+// Mỗi namespace có socket riêng biệt
+const processSocket = io("ws://localhost:4000/ws/process", config);
+const reportSocket = io("ws://localhost:4000/ws/report", config);
+const dashboardSocket = io("ws://localhost:4000/ws/dashboard", config);
+const iotSocket = io("ws://localhost:4000/ws/iot", config);
 ```
 
-<!-- > **Note:**
->
-> - You should open 2 terminals and run both commands in parallel.
-> - Or use an automatic script (if available):
->   ```bash
->   npm run dev:all
->   ``` -->
+## Các component chính
 
-## Build and Run PRODUCT (production)
+### 1. WebApp.tsx
 
-```bash
-npm run build         # Build both React and Electron
-npx electron-builder  # Package the app into an installer (dmg, zip, ...)
+- Kết nối đến namespace `/ws/process`
+- Xử lý events: `process-data`, `process-data-result`
+- Hiển thị dữ liệu process
+
+### 2. ReportApp.tsx
+
+- Kết nối đến namespace `/ws/report`
+- Xử lý events: `report-production`, `report-production-result`
+- Hiển thị báo cáo production
+
+### 3. WebAppRoot.tsx
+
+- Component tổng hợp hiển thị cả hai app song song
+- Demo việc sử dụng nhiều namespace cùng lúc
+
+## API Functions
+
+### Process Namespace:
+
+```typescript
+import { sendProcessData, getProcessConnectionStatus } from "./web-socket";
+
+// Gửi dữ liệu process
+sendProcessData(payload);
+
+// Kiểm tra trạng thái kết nối
+const isConnected = getProcessConnectionStatus();
 ```
 
-- After building, the installer files will be in the `dist/` or `dist/mac-arm64/` folder.
-- You can run the `.app` file directly or share the `.dmg` file with Mac users.
+### Report Namespace:
 
----
+```typescript
+import { sendReportProduction, getReportConnectionStatus } from "./web-socket";
+
+// Gửi yêu cầu báo cáo production
+sendReportProduction(payload);
+
+// Kiểm tra trạng thái kết nối
+const isConnected = getReportConnectionStatus();
+```
+
+## Events
+
+### Process Events:
+
+- `process-socket-connected` - Kết nối thành công
+- `process-socket-disconnected` - Mất kết nối
+- `process-data-result` - Nhận kết quả dữ liệu
+- `data-changed` - Dữ liệu thay đổi
+
+### Report Events:
+
+- `report-socket-connected` - Kết nối thành công
+- `report-socket-disconnected` - Mất kết nối
+- `report-production-result` - Nhận kết quả báo cáo
+
+## Lợi ích của Multiple Namespaces
+
+1. **Tổ chức code tốt**: Mỗi chức năng có namespace riêng
+2. **Bảo mật**: Có thể áp dụng guard khác nhau cho từng namespace
+3. **Hiệu suất**: Không cần mở nhiều cổng TCP riêng biệt
+4. **Quản lý dễ dàng**: Mỗi namespace có lifecycle riêng
+5. **Scalability**: Dễ dàng mở rộng thêm namespace mới
+
+## Chạy ứng dụng
+
+```bash
+npm install
+npm run dev
+```
+
+Ứng dụng sẽ chạy trên `http://localhost:5173` và hiển thị cả hai component song song để demo việc sử dụng nhiều namespace WebSocket.

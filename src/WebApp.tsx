@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useRef, useState } from "react";
-import { sendProcessData, getConnectionStatus } from "./web-socket";
+import { sendProcessData, getProcessConnectionStatus } from "./web-socket";
 
 const DEFAULT_PAYLOAD = {
-  process_id: "3c0912f3-34b8-4b50-98d6-43773ac6b4e1",
+  process_id: "65a3c22b-a11e-40eb-b8f7-38e4e9fc7823",
   filterProcessDataDto: {
     page: 1,
     pageSize: 10,
@@ -16,7 +16,7 @@ const DEFAULT_PAYLOAD = {
 };
 
 function WebApp() {
-  const [isConnected, setIsConnected] = useState(getConnectionStatus());
+  const [isConnected, setIsConnected] = useState(getProcessConnectionStatus());
   const [processResult, setProcessResult] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -64,19 +64,19 @@ function WebApp() {
     };
 
     // Đăng ký listener
-    window.addEventListener("socket-connected", handleSocketConnected);
-    window.addEventListener("socket-disconnected", handleSocketDisconnected);
+    window.addEventListener("process-socket-connected", handleSocketConnected);
+    window.addEventListener("process-socket-disconnected", handleSocketDisconnected);
     window.addEventListener("process-data-result", handleProcessResult as EventListener);
     window.addEventListener("data-changed", handleDataChanged as EventListener);
 
     // Nếu đã connected sẵn khi mount -> gọi ngay
-    if (getConnectionStatus()) {
+    if (getProcessConnectionStatus()) {
       triggerFetch(DEFAULT_PAYLOAD);
     }
 
     return () => {
-      window.removeEventListener("socket-connected", handleSocketConnected);
-      window.removeEventListener("socket-disconnected", handleSocketDisconnected);
+      window.removeEventListener("process-socket-connected", handleSocketConnected);
+      window.removeEventListener("process-socket-disconnected", handleSocketDisconnected);
       window.removeEventListener("process-data-result", handleProcessResult as EventListener);
       window.removeEventListener("data-changed", handleDataChanged as EventListener);
       if (refreshTimerRef.current) clearTimeout(refreshTimerRef.current);
