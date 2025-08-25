@@ -6,14 +6,14 @@ const DEFAULT_REPORT_PAYLOAD = {
   page: 1,
   pageSize: 10,
   tenant_id: "550e8400-e29b-41d4-a716-446655440000",
-  search: "",
+  search: "6/8 4",
   size_id: "",
   program_id: "",
   product_id: "",
   start_date: "",
   end_date: "",
-  show_dates: true,
-  show_employees: true
+  show_dates: false,
+  show_employees: false
 };
 
 function ReportApp() {
