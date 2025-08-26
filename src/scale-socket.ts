@@ -6,16 +6,15 @@ export const access_key = "cba417a8-da45-477b-8572-20507169fd82";
 export const model_type = "Display";
 export const worker_summary = true;
 
-const clientType = "device"; // device or web
+const clientType = "device";
 const deviceId = "D83ADDAA4863";
+const accessKey = "cac11dfd-4387-491a-8d7b-ca529a8bf230";
 const accessToken = "";
 
-// export const socket = io("wss://connect-dev.qcm.com.vn/ws/iot", {
-// export const socket = io("ws://168.231.119.101:4000/ws/iot", {
 export const socket = io("ws://localhost:4000/ws/iot", {
   path: "/socket.io/",
   transports: ["websocket"],
-  query: { type: clientType, deviceId },
+  query: { type: clientType, deviceId, accessKey },
   auth: { token: accessToken },
   reconnection: true
 });
