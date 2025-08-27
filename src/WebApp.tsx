@@ -3,11 +3,12 @@ import { useEffect, useRef, useState } from "react";
 import { sendProcessData, getProcessConnectionStatus } from "./web-socket";
 
 const DEFAULT_PAYLOAD = {
-  process_id: "65a3c22b-a11e-40eb-b8f7-38e4e9fc7823",
+  process_id: "56f0cc3f-59b4-4d73-b0c7-223bd24f0064",
   filterProcessDataDto: {
     page: 1,
     pageSize: 10,
-    tenant_id: "550e8400-e29b-41d4-a716-446655440000",
+    // tenant_id: "e42b2852-99ec-40a1-bfdf-16d82c567236",
+    tenant_id: null,
     search: "",
     size_id: "",
     product_id: ""
