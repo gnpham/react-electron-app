@@ -70,4 +70,22 @@ socket.on("data-changed", (result) => {
   window.dispatchEvent(new CustomEvent("device-result", { detail: result }));
 });
 
+socket.on("config-changed", (result) => {
+  console.log("Sync request:", result);
+  alert(result);
+  window.dispatchEvent(new CustomEvent("device-result", { detail: result }));
+});
+
+socket.on("status-changed", (result) => {
+  console.log("Sync request:", result);
+  alert(result.process_id);
+  window.dispatchEvent(new CustomEvent("device-result", { detail: result }));
+});
+
+// socket.on("program-resumed", (result) => {
+//   console.log("Sync request:", result);
+//   alert(result);
+//   window.dispatchEvent(new CustomEvent("device-result", { detail: result }));
+// });
+
 export const getConnectionStatus = () => isConnected;
