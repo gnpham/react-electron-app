@@ -62,4 +62,10 @@ socket.on("sync-request", (result) => {
   window.dispatchEvent(new CustomEvent("device-result", { detail: result }));
 });
 
+socket.on("update-version", (result) => {
+  console.log("Sync request:", result);
+  alert(result);
+  window.dispatchEvent(new CustomEvent("device-result", { detail: result }));
+});
+
 export const getConnectionStatus = () => isConnected;
