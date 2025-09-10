@@ -1,6 +1,6 @@
-import WebApp from "./WebApp";
-import ReportApp from "./ReportApp";
+import WebApp from "../WebApp";
 import "./css/main.css";
+import ReportApp from "./ReportApp";
 
 function WebAppRoot() {
   return (

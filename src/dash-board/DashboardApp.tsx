@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useRef, useState } from "react";
-import { sendReportProduction, getDashboardConnectionStatus } from "./dashboard-socket";
+import { sendReportProduction, getDashboardConnectionStatus } from "./dash-board/dashboard-socket";
 
 const DEFAULT_DASHBOARD_PAYLOAD = {
   tenant_id: "e42b2852-99ec-40a1-bfdf-16d82c567236",

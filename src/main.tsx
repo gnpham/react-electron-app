@@ -1,16 +1,16 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import ScaleApp from "./ScaleApp";
-// import WebAppRoot from "./WebAppRoot";
-// import DisplayApp from "./DisplayApp";
-// import DashboardApp from "./DashBoardApp";
 import "./css/main.css";
+import DisplayApp from "./display/DisplayApp";
+// import DashboardApp from "./dash-board/DashboardApp";
+// import WebAppRoot from "./WebAppRoot";
+// import ScaleApp from "./scale/ScaleApp";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <ScaleApp />
+    {/* <ScaleApp /> */}
     {/* <WebAppRoot /> */}
-    {/* <DisplayApp /> */}
+    <DisplayApp />
     {/* <DashboardApp /> */}
   </React.StrictMode>
 );
