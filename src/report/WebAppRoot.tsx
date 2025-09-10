@@ -1,5 +1,5 @@
-import WebApp from "../WebApp";
-import "./css/main.css";
+import "../css/main.css";
+import WebApp from "./WebApp";
 import ReportApp from "./ReportApp";
 
 function WebAppRoot() {

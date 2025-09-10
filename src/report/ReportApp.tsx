@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useRef, useState } from "react";
-import { sendReportProduction, getReportConnectionStatus } from "./web-socket";
+import { getReportConnectionStatus, sendReportProduction } from "./web-socket";
 
 const DEFAULT_REPORT_PAYLOAD = {
   page: 1,
