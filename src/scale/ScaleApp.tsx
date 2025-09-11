@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { sendDisplayDevice, getConnectionStatus } from "./scale-socket";
+import { getConnectionStatus, sendDisplayDevice } from "./scale-socket";
 
 function ScaleApp() {
   const [isConnected, setIsConnected] = useState(getConnectionStatus());
