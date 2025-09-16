@@ -2,16 +2,24 @@
 import { useEffect, useRef, useState } from "react";
 import { sendProcessData, getProcessConnectionStatus } from "./web-socket";
 
+// const DEFAULT_PAYLOAD = {
+//   process_id: "56f0cc3f-59b4-4d73-b0c7-223bd24f0064",
+//   filterProcessDataDto: {
+//     page: 1,
+//     pageSize: 10,
+//     // tenant_id: "e42b2852-99ec-40a1-bfdf-16d82c567236",
+//     tenant_id: null,
+//     search: "",
+//     size_id: "",
+//     product_id: ""
+//   }
+// };
 const DEFAULT_PAYLOAD = {
-  process_id: "56f0cc3f-59b4-4d73-b0c7-223bd24f0064",
-  filterProcessDataDto: {
+  filterProcessDto: {
     page: 1,
     pageSize: 10,
-    // tenant_id: "e42b2852-99ec-40a1-bfdf-16d82c567236",
-    tenant_id: null,
-    search: "",
-    size_id: "",
-    product_id: ""
+    tenant_id: "e42b2852-99ec-40a1-bfdf-16d82c567236",
+    search: ""
   }
 };
 
@@ -50,11 +58,11 @@ function WebApp() {
 
     // Khi BE báo có dữ liệu mới -> tự refetch
     const handleDataChanged = (event: CustomEvent) => {
-      const { process_id } = event.detail || {};
+      // const { process_id } = event.detail || {};
       const lastPayload = lastPayloadRef.current;
 
       if (!lastPayload) return;
-      if (lastPayload.process_id && process_id && lastPayload.process_id !== process_id) return;
+      // if (lastPayload.process_id && process_id && lastPayload.process_id !== process_id) return;
 
       // Throttle 500ms để gom nhiều sự kiện liên tiếp
       if (refreshTimerRef.current) clearTimeout(refreshTimerRef.current);
@@ -97,7 +105,7 @@ function WebApp() {
 
       {processResult && (
         <>
-          <div className="table-container">
+          {/* <div className="table-container">
             {((processResult as any)?.data?.data?.list ?? []).length === 0 ? (
               <div className="result-box">Không có dữ liệu</div>
             ) : (
@@ -132,7 +140,7 @@ function WebApp() {
                 </tbody>
               </table>
             )}
-          </div>
+          </div> */}
 
           {/* JSON đầy đủ để debug (tuỳ chọn) */}
           <div className="result-box">
