@@ -1,13 +1,13 @@
 import { io } from "socket.io-client";
 
 // Mock device data
-export const device_id = "TV360";
-export const access_key = "cba417a8-da45-477b-8572-20507169fd82";
-export const model_type = "Display";
-export const worker_summary = true;
+export const device_id = "D83ADDAA4863";
+export const access_key = "cac11dfd-4387-491a-8d7b-ca529a8bf230";
+// export const model_type = "Display";
+// export const worker_summary = true;
 
 const clientType = "device";
-const deviceId = "D83ADDAA4863";
+export const deviceId = "D83ADDAA4863";
 const accessKey = "cac11dfd-4387-491a-8d7b-ca529a8bf230";
 const accessToken = "";
 
@@ -56,5 +56,23 @@ socket.on("update-version", (result) => {
   alert(result);
   window.dispatchEvent(new CustomEvent("device-result", { detail: result }));
 });
+
+// Listen iot-interacted-result from server and bubble to UI
+socket.on("iot-interacted-result", (result) => {
+  console.log("iot-interacted-result:", result);
+  window.dispatchEvent(new CustomEvent("iot-interacted-result", { detail: result }));
+});
+
+// Helper to emit iot-interacted to server
+export const emitIotInteracted = (programId: string) => {
+  try {
+    socket.emit("iot-interacted", {
+      device_id,
+      program_id: programId
+    });
+  } catch (error) {
+    console.error("Failed to emit iot-interacted", error);
+  }
+};
 
 export const getConnectionStatus = () => isConnected;
