@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getConnectionStatus, sendDisplayDevice } from "./scale-socket";
+import { getConnectionStatus } from "./scale-socket";
 
 function ScaleApp() {
   const [isConnected, setIsConnected] = useState(getConnectionStatus());
@@ -41,7 +41,6 @@ function ScaleApp() {
   const handleDeviceInfo = () => {
     setIsLoading(true);
     setDeviceResult(null);
-    sendDisplayDevice();
   };
 
   return (
@@ -55,13 +54,13 @@ function ScaleApp() {
 
       <div style={{ marginBottom: "20px" }}>
         <button onClick={handleDeviceInfo} disabled={!isConnected || isLoading} className="display-btn">
-          {isLoading ? "Loading..." : "Display Device"}
+          {isLoading ? "Loading..." : "Device"}
         </button>
       </div>
 
       {deviceResult && (
         <div className="result-box">
-          <h3>Device Result:</h3>
+          <h3>Device Result (pause-request):</h3>
           <pre className="result-pre">{JSON.stringify(deviceResult, null, 2)}</pre>
         </div>
       )}
