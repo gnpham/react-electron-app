@@ -1,14 +1,20 @@
 import { io } from "socket.io-client";
 
 // Mock device data
-export const device_id = "D83ADDAA4863";
-export const access_key = "cac11dfd-4387-491a-8d7b-ca529a8bf230";
-// export const model_type = "Display";
-// export const worker_summary = true;
+// scale_web_prod
+// export const device_id = "D83ADDAA4863";
+// export const access_key = "cac11dfd-4387-491a-8d7b-ca529a8bf230";
+// const clientType = "device";
+// export const deviceId = "D83ADDAA4863";
+// const accessKey = "cac11dfd-4387-491a-8d7b-ca529a8bf230";
+// const accessToken = "";
 
+// scale_web_beta
+export const device_id = "QCM1234";
+export const access_key = "c702c684-0bd7-44fd-949b-b0727f488346";
 const clientType = "device";
-export const deviceId = "D83ADDAA4863";
-const accessKey = "cac11dfd-4387-491a-8d7b-ca529a8bf230";
+export const deviceId = "QCM1234";
+const accessKey = "c702c684-0bd7-44fd-949b-b0727f488346";
 const accessToken = "";
 
 export const socket = io("ws://localhost:4000/ws/iot", {
@@ -39,21 +45,23 @@ socket.on("disconnect", () => {
 });
 
 // Listen for sync-request
-// socket.on("sync-request", (result) => {
-//   console.log("Sync request:", result);
-//   alert(result);
-//   window.dispatchEvent(new CustomEvent("device-result", { detail: result }));
-// });
+socket.on("sync-request", (result) => {
+  // console.log("Sync request:", result);
+  console.log("sync-request");
+  // alert(result);
+  window.dispatchEvent(new CustomEvent("device-result", { detail: result }));
+});
 
 socket.on("pause-request", (result) => {
-  console.log("Sync request:", result);
-  alert(result);
+  // console.log("Pause request:", result);
+  // alert(result);
+  console.log("countdown", result.countdown_seconds);
   window.dispatchEvent(new CustomEvent("device-result", { detail: result }));
 });
 
 socket.on("update-version", (result) => {
   console.log("Sync request:", result);
-  alert(result);
+  // alert(result);
   window.dispatchEvent(new CustomEvent("device-result", { detail: result }));
 });
 

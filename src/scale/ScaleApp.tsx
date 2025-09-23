@@ -69,10 +69,10 @@ function ScaleApp() {
   useEffect(() => {
     if (countdown === null) return;
 
-    if (countdown === 30 && programId) {
-      // Tự động gửi sự kiện iot-interacted để hủy pause
-      emitIotInteracted(programId);
-    }
+    // if (countdown === 30 && programId) {
+    //   // Tự động gửi sự kiện iot-interacted để hủy pause
+    //   emitIotInteracted(programId);
+    // }
 
     if (countdown <= 0) return;
 
